@@ -33,54 +33,44 @@ public class ReadInputFromTextFile
     {
         new ReadInputFromTextFile();
         
-        /*
-        ReadInputFromTextFile ob = new ReadInputFromTextFile();
-    
-        int verticesNum = ob.verticesNumber();
-    
-        System.out.println(verticesNum);
-        */
+        
+        
+        
+        Graph graphy = new Graph(numberOfVertices);
+         
+        
+       // System.out.println(graphy.verticesNumber);
+         
+        for (int i = 0; i < numberOfVertices; i++) {
+            for (int j = 0; j < numberOfVertices; j++) {
+                 graphy.addEdge(i, j, matrix[i][j]);
+            }
+            
+        }
+        
+        System.out.println();
+        
+        System.out.println("Graph class read: \n" + graphy.toString());
+        
+        System.out.println(Arrays.toString(graphy.findAdjacencyVertices(0)));
+        System.out.println(Arrays.toString(graphy.findAdjacencyVertices(1)));
+        System.out.println(Arrays.toString(graphy.findAdjacencyVertices(2)));
+        System.out.println(Arrays.toString(graphy.findAdjacencyVertices(3)));
+        System.out.println(Arrays.toString(graphy.findAdjacencyVertices(4)));
+         
        
-        /*
-        Dijkstra newd = new Dijkstra();
-        
-        System.out.println(newd.verticesNum);
-        System.out.println(newd.s);
-        System.out.println(newd.t);
-        */
-        
-        
-        
-        
-         Graph graphy = new Graph(numberOfVertices);
-         
-        
-         System.out.println(graphy.verticesNumber);
-         
-         System.out.println(matrix[1][0]);
-         
-         System.out.println(Arrays.toString(graphy.findAdjacencyVertices(0)));
-         
-         
-         
-         
-         
-         
-        
-        
     }
     
     public ReadInputFromTextFile()
     {
         readGraph();
-        //verticesNumber();
     }
     
     /**
      * Reads graph from text file (entries as given in COP4534 3rd assignment)
      * and prints it
      */
-    public static void readGraph()
+    public void readGraph()
     {
         File input = new File("/Users/aimankayad/Desktop/graph.txt");
 
@@ -96,7 +86,7 @@ public class ReadInputFromTextFile
 
         // int numberOfVertices = 0;
         
-       //  int mat_i_j=0;
+        // int mat_i_j=0;
         
         while (in.hasNextLine())
         {
@@ -104,16 +94,19 @@ public class ReadInputFromTextFile
             System.out.println(numberOfVertices);
              
             matrix = new int[numberOfVertices][numberOfVertices];
-            
+           
+           
             for(int i = 0; i < numberOfVertices; i++)
             {
                 for(int j = 0; j < numberOfVertices; j++)
                 {
                     matrix[i][j] = in.nextInt();
+                    
+                   
                     System.out.print(matrix[i][j] + " ");
                 }
                 
-                System.out.println();
+               System.out.println();
             }
             
             s = in.nextInt();
@@ -125,14 +118,12 @@ public class ReadInputFromTextFile
         in.close();
         System.out.println("Scanner Closed");
         
-        // System.out.println(matrix[2][1]);
-        
     }
     
     
     public static int verticesNumber() 
     {
-        return numberOfVertices;
+       return numberOfVertices;
     }
     
     public static int sValue() 
