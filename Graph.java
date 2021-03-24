@@ -1,25 +1,26 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+import java.util.Arrays;
 
 /**
  *
  * @author aimankayad
  */
-    
-import java.util.Arrays;
-
-/**
- * Implements a Graph. Uses an adjacency matrix to represent the graph.
- * 
- * @author Prof. Antonio Hernandez
- */
-public class Graph implements GraphInterface
+public class Graph 
 {
-    private int verticesNumber;
-    private int[][] matrix; //adjacency matrix
+    int verticesNumber;
+    static int[][] matrix; //adjacency matrix
+    
+    static int[] p;
+    static int[] d;
+    
+    
+    ReadInputFromTextFile ob = new ReadInputFromTextFile();
+    
+        int verticesNum = ob.verticesNumber();
+        
+        int s = ob.sValue();
+        
+        int t = ob.tValue();  
+        
     
     public Graph()
     {
@@ -33,7 +34,7 @@ public class Graph implements GraphInterface
         matrix = new int[verticesNumber][verticesNumber];
     }
     
-    public void addEdge(int v, int w, int weight )
+    public void addEdge(int v, int w, int weight)
     {
         matrix[v][w] = weight;
         matrix[w][v] = weight;
@@ -84,5 +85,92 @@ public class Graph implements GraphInterface
         
         return s;
     }
-}
     
+    /**
+     * Calculates the shortest paths from a given vertex to
+     * all vertices.
+     * 
+     * @param p paths (p[i] contains previous vertex in the
+     * shortest path from v)
+     * 
+     * @param d distances (d[i] contains the shortest distance
+     * from v)
+     * 
+     * @param v given vertex
+     */
+    public void allShortestPaths(int[] p, int[] d, int v) 
+    {
+        boolean[] visited = new boolean[verticesNum];
+        
+        for (int i = 0; i < verticesNum; i++) {
+            visited[i] = false; // not yet visited
+            p[i] = -1;
+            d[i] = Integer.MAX_VALUE; //d[i] = INFINITY
+        }
+        
+        d[v] = 0;
+        
+        for (int i = 0; i < verticesNumber - 1; i++) {
+            int w = minDistance(visited, d);
+            visited[w] = true;
+            
+            int[] adj = findAdjacencyVertices(w);
+            for(int u : adj) {
+                if (!visited[u]) {
+                    if (d[w] + matrix[w][u] < d[u]) {
+                        d[u] = d[w] + matrix[w][u];
+                        p[u] = w;
+                    }
+                }
+            }
+        }
+    }
+    
+    private int minDistance(boolean[] visited, int[] distance) {
+        int index = -1;
+        int min = Integer.MAX_VALUE;
+        for (int i = 0; i < verticesNumber; i++) {
+             if (!visited[i]) {
+                 if (distance[i] <= min) {
+                     min = distance[i];
+                     index = i;
+                 }
+             }
+        }
+        
+        return index;
+    }
+    
+    
+    /**
+     * Returns shortest path between given source and target vertices.
+     * 
+     * @param p paths (p[i] contains previous vertex in the shortest path
+     *   from source vertex)
+     */
+    public int[] getPath(int s, int t, int[] p) {
+        int[] shortestPath = new int[p.length];
+        
+        int current = t;
+        int total = 0;
+        while (current != s) {
+            shortestPath[total] = current;
+            current = p[current];
+            total++;
+        }
+       shortestPath[total++] = s;
+       shortestPath = Arrays.copyOf(shortestPath, total);
+       
+       //reverses array
+       for(int i = 0; i < total/2; i++) {
+           int temp = shortestPath[i];
+           shortestPath[i] = shortestPath[total - 1 - i];
+           shortestPath[total - 1 - i] = temp;
+       }
+       
+       return shortestPath;
+    }
+
+    
+}
+
