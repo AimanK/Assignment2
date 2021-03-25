@@ -29,6 +29,8 @@ public class ReadInputFromTextFile
    
     static int[][] matrix;
     
+    // static int p[];
+    
     public static void main(String[] args)
     {
         new ReadInputFromTextFile();
@@ -40,10 +42,6 @@ public class ReadInputFromTextFile
         
         
         int p[] = new int[numberOfVertices];
-        
-        
-        int p2[] = new int[numberOfVertices];
-    
        
         int d[] = new int[numberOfVertices]; 
          
@@ -68,34 +66,20 @@ public class ReadInputFromTextFile
       System.out.println(i + ": " + Arrays.toString(graphy.findAdjacencyVertices(i)));
      }
      
-    System.out.println("Finding shortest paths for every vertex to every other vertex...");
+    
      
+     System.out.println("Finding shortest paths from vertex " + s + " to all vertices...");
+    
+     graphy.allShortestPaths(p, d, s);
      
-     for (int i = 0; i < numberOfVertices; i++) 
-     {
-       graphy.allShortestPaths(p, d, i);  
-       //System.out.println(Arrays.toString(p));
-       //System.out.println(Arrays.toString(d));
-     }
+     System.out.println("Applying Dijkstra's algorithm from vertex: " + s + " to " + t);
      
-     System.out.println("Applying Dijkstra's algorithm...");
-     /*
-     for (int i = p.length; i > 0; i--) {
-         for (int j = p.length; j > 0; j--) 
-         {
-          graphy.getPath(i, j, p);
-          
-         }
-         System.out.println(Arrays.toString(p));
-     }
-     */
+     System.out.println(Arrays.toString(graphy.getPath(s, t, p)));
+   //  System.out.println(Arrays.toString(p)); // previous vertex on the path
+   //  System.out.println(Arrays.toString(d)); // weights on the path
+     
        
-      System.out.println(Arrays.toString(graphy.getPath(2, 3, p)));
-     
 
-        
-        
-        
        
     }
     
