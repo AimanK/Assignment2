@@ -1,26 +1,24 @@
+
+
 import java.util.Arrays;
 
 /**
  *
  * @author aimankayad
  */
-public class Graph 
+public class Graph implements GraphInterface
 {
     int verticesNumber;
     static int[][] matrix; //adjacency matrix
     
-    static int[] p;
-    static int[] d;
+   // static int[] p;
+   // static int[] d;
+    
+   // p = new int[verticesNumber];
     
     
-    ReadInputFromTextFile ob = new ReadInputFromTextFile();
-    
-        int verticesNum = ob.verticesNumber();
-        
-        int s = ob.sValue();
-        
-        int t = ob.tValue();  
-        
+    //d = new int[verticesNumber]; 
+   
     
     public Graph()
     {
@@ -100,28 +98,32 @@ public class Graph
      */
     public void allShortestPaths(int[] p, int[] d, int v) 
     {
-        boolean[] visited = new boolean[verticesNum];
+        boolean[] visited = new boolean[verticesNumber];
         
-        for (int i = 0; i < verticesNum; i++) {
+        for (int i = 0; i < verticesNumber; i++) {
             visited[i] = false; // not yet visited
-            p[i] = -1;
+            p[i] = -1; // previous vertex in unknown
             d[i] = Integer.MAX_VALUE; //d[i] = INFINITY
         }
         
         d[v] = 0;
         
-        for (int i = 0; i < verticesNumber - 1; i++) {
+        for (int i = 0; i < verticesNumber - 1; i++) 
+        {
             int w = minDistance(visited, d);
             visited[w] = true;
             
             int[] adj = findAdjacencyVertices(w);
-            for(int u : adj) {
-                if (!visited[u]) {
-                    if (d[w] + matrix[w][u] < d[u]) {
+            for(int u : adj) 
+            {
+                if (!visited[u]) 
+                 {
+                    if (d[w] + matrix[w][u] < d[u]) 
+                    {
                         d[u] = d[w] + matrix[w][u];
                         p[u] = w;
                     }
-                }
+                  }
             }
         }
     }
@@ -148,12 +150,15 @@ public class Graph
      * @param p paths (p[i] contains previous vertex in the shortest path
      *   from source vertex)
      */
-    public int[] getPath(int s, int t, int[] p) {
-        int[] shortestPath = new int[p.length];
+    public int[] getPath(int s, int t, int[] p) 
+    {
+        
+        int[] shortestPath = new int[p.length]; 
         
         int current = t;
         int total = 0;
-        while (current != s) {
+        while (current != s) 
+        {
             shortestPath[total] = current;
             current = p[current];
             total++;
@@ -162,7 +167,8 @@ public class Graph
        shortestPath = Arrays.copyOf(shortestPath, total);
        
        //reverses array
-       for(int i = 0; i < total/2; i++) {
+       for(int i = 0; i < total/2; i++) 
+       {
            int temp = shortestPath[i];
            shortestPath[i] = shortestPath[total - 1 - i];
            shortestPath[total - 1 - i] = temp;
@@ -173,4 +179,3 @@ public class Graph
 
     
 }
-
