@@ -1,5 +1,4 @@
 
-
 import java.util.Arrays;
 
 /**
@@ -11,13 +10,6 @@ public class Graph implements GraphInterface
     int verticesNumber;
     static int[][] matrix; //adjacency matrix
     
-   // static int[] p;
-   // static int[] d;
-    
-   // p = new int[verticesNumber];
-    
-    
-    //d = new int[verticesNumber]; 
    
     
     public Graph()
